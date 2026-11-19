@@ -1,0 +1,394 @@
+{
+  "conversacion": [
+    {
+      "n": 1,
+      "pregunta": "¿Qué diferencia hay entre un Server Component y un Client Component en Next.js?",
+      "texto": "En Next.js (App Router), la diferencia principal es dónde se ejecutan y qué capacidades tienen:\n\n* **Server Components (por defecto):** Se ejecutan **solo en el servidor**. No envían JavaScript al navegador, lo que mejora el rendimiento. Son ideales para obtener datos (*fetching*) y acceder a recursos del backend, pero **no permiten interactividad** (ni hooks como `useState`, ni eventos como `onCl",
+      "primerTrozoS": 19.15,
+      "totalS": 19.71,
+      "entrada": 68,
+      "salida": 164,
+      "razonamiento": 321,
+      "uso": {
+        "promptTokenCount": 68,
+        "candidatesTokenCount": 164,
+        "totalTokenCount": 553,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 68
+          }
+        ],
+        "candidatesTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 164
+          }
+        ],
+        "thoughtsTokenCount": 321,
+        "serviceTier": "standard"
+      }
+    },
+    {
+      "n": 2,
+      "pregunta": "¿Y eso cómo se aplica a un chat que hace streaming?",
+      "texto": "En un chat con streaming, ambos trabajan juntos así:\n\n* **Server Component (la página/layout):** Carga el contenedor inicial y, si hay historial guardado en base de datos, lo obtiene de forma segura y se lo pasa como *props* al chat.\n* **Client Component (`'use client'`):** Es **obligatorio** para la interfaz del chat. Maneja el `input` del usuario, el envío del formulario y el estado (`useState`)",
+      "primerTrozoS": 5.82,
+      "totalS": 6.75,
+      "entrada": 251,
+      "salida": 168,
+      "razonamiento": 361,
+      "uso": {
+        "promptTokenCount": 251,
+        "candidatesTokenCount": 168,
+        "totalTokenCount": 780,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 251
+          }
+        ],
+        "candidatesTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 168
+          }
+        ],
+        "thoughtsTokenCount": 361,
+        "serviceTier": "standard"
+      }
+    },
+    {
+      "n": 3,
+      "pregunta": "Dame un ejemplo corto de un hook useDebounce en TypeScript.",
+      "texto": "Aquí tienes un ejemplo corto y tipado de `useDebounce`:\n\n```typescript\nimport { useState, useEffect } from 'react';\n\nexport function useDebounce<T>(value: T, delay: number = 500): T {\n  const [debouncedValue, setDebouncedValue] = useState<T>(value);\n\n  useEffect(() => {\n    const timer = setTimeout(() => {\n      setDebouncedValue(value);\n    }, delay);\n\n    return () => clearTimeout(timer);\n  }, [",
+      "primerTrozoS": 13.65,
+      "totalS": 14.26,
+      "entrada": 438,
+      "salida": 195,
+      "razonamiento": 157,
+      "uso": {
+        "promptTokenCount": 438,
+        "candidatesTokenCount": 195,
+        "totalTokenCount": 790,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 438
+          }
+        ],
+        "candidatesTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 195
+          }
+        ],
+        "thoughtsTokenCount": 157,
+        "serviceTier": "standard"
+      }
+    },
+    {
+      "n": 4,
+      "pregunta": "¿Cómo lo uso en un input de búsqueda?",
+      "texto": "Así es como lo conectas con un `input` y un `useEffect` para hacer la búsqueda:\n\n```tsx\n'use client';\nimport { useState, useEffect } from 'react';\nimport { useDebounce } from './useDebounce';\n\nexport function SearchInput() {\n  const [query, setQuery] = useState('');\n  const debouncedQuery = useDebounce(query, 400);\n\n  useEffect(() => {\n    if (!debouncedQuery) return;\n\n    // Aquí haces tu fetch o",
+      "primerTrozoS": 7.82,
+      "totalS": 7.82,
+      "entrada": 649,
+      "salida": 245,
+      "razonamiento": 390,
+      "uso": {
+        "promptTokenCount": 649,
+        "candidatesTokenCount": 245,
+        "totalTokenCount": 1284,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 649
+          }
+        ],
+        "candidatesTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 245
+          }
+        ],
+        "thoughtsTokenCount": 390,
+        "serviceTier": "standard"
+      }
+    },
+    {
+      "n": 5,
+      "pregunta": "¿Qué pasa si el componente se desmonta antes del timeout?",
+      "texto": "No pasa nada malo, gracias a esta línea dentro del `useEffect` del hook:\n\n```typescript\nreturn () => clearTimeout(timer);\n```\n\nEsa es la función de limpieza (*cleanup*). Si el componente se desmonta antes de que termine el tiempo, React ejecuta automáticamente `clearTimeout(timer)`, cancelando el temporizador y evitando que intente actualizar el estado de un componente que ya no existe (lo que ant",
+      "primerTrozoS": 8.07,
+      "totalS": 8.47,
+      "entrada": 913,
+      "salida": 102,
+      "razonamiento": 0,
+      "uso": {
+        "promptTokenCount": 913,
+        "candidatesTokenCount": 102,
+        "totalTokenCount": 1015,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 913
+          }
+        ],
+        "candidatesTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 102
+          }
+        ],
+        "serviceTier": "standard"
+      }
+    },
+    {
+      "n": 6,
+      "pregunta": "¿Cuándo conviene useDeferredValue en vez de debounce?",
+      "texto": "Conviene usar **`useDeferredValue`** cuando el cuello de botella es el **renderizado local (CPU)** y no una petición de red.\n\n* **Usa `useDebounce` para APIs/Red:** Si vas a hacer un `fetch` al servidor, necesitas un retraso fijo (ej. 400ms) para no saturar tu backend con peticiones en cada tecla.\n* **Usa `useDeferredValue` para UI pesada:** Si tienes una lista gigante en memoria (ej. filtrar 5,00",
+      "primerTrozoS": 9.11,
+      "totalS": 10.19,
+      "entrada": 1010,
+      "salida": 157,
+      "razonamiento": 266,
+      "uso": {
+        "promptTokenCount": 1010,
+        "candidatesTokenCount": 157,
+        "totalTokenCount": 1433,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 1010
+          }
+        ],
+        "candidatesTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 157
+          }
+        ],
+        "thoughtsTokenCount": 266,
+        "serviceTier": "standard"
+      }
+    },
+    {
+      "n": 7,
+      "pregunta": "¿Cómo pruebo ese hook con Vitest?",
+      "texto": "Para probarlo rápido sin esperar el tiempo real, usa **timers falsos** de Vitest junto con `renderHook` de `@testing-library/react`:\n\n```typescript\nimport { renderHook, act } from '@testing-library/react';\nimport { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';\nimport { useDebounce } from './useDebounce';\n\ndescribe('useDebounce', () => {\n  beforeEach(() => {\n    vi.useFakeTimers(",
+      "primerTrozoS": 7.87,
+      "totalS": 9.2,
+      "entrada": 1001,
+      "salida": 342,
+      "razonamiento": 202,
+      "uso": {
+        "promptTokenCount": 1001,
+        "candidatesTokenCount": 342,
+        "totalTokenCount": 1545,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 1001
+          }
+        ],
+        "candidatesTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 342
+          }
+        ],
+        "thoughtsTokenCount": 202,
+        "serviceTier": "standard"
+      }
+    },
+    {
+      "n": 8,
+      "pregunta": "¿Y si uso fake timers?",
+      "texto": "El ejemplo anterior **ya usa *fake timers*** (`vi.useFakeTimers()`). \n\nSi los usas, solo ten en cuenta 3 reglas clave para evitar dolores de cabeza:\n\n1. **Envuelve en `act()`:** Siempre mete `vi.advanceTimersByTime()` dentro de `act(() => { ... })` para que React procese el cambio de estado antes de hacer el `expect`.\n2. **Limpia después:** Usa `vi.useRealTimers()` en `afterEach` para no afectar a",
+      "primerTrozoS": 22.57,
+      "totalS": 23.79,
+      "entrada": 1169,
+      "salida": 179,
+      "razonamiento": 218,
+      "uso": {
+        "promptTokenCount": 1169,
+        "candidatesTokenCount": 179,
+        "totalTokenCount": 1566,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 1169
+          }
+        ],
+        "candidatesTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 179
+          }
+        ],
+        "thoughtsTokenCount": 218,
+        "serviceTier": "standard"
+      }
+    },
+    {
+      "n": 9,
+      "pregunta": "Resume en tres puntos lo que hablamos.",
+      "texto": "1. **Uso y limpieza:** `useDebounce` retrasa la actualización de un valor (ideal para llamadas a APIs en `useEffect`) y evita fugas de memoria al desmontarse gracias al `clearTimeout` en el *cleanup*.\n2. **Debounce vs. `useDeferredValue`:** Usa *debounce* para limitar peticiones de red con un tiempo fijo, y `useDeferredValue` cuando el cuello de botella sea el renderizado local de UI pesada.\n3. **",
+      "primerTrozoS": 14.06,
+      "totalS": 14.67,
+      "entrada": 1151,
+      "salida": 151,
+      "razonamiento": 0,
+      "uso": {
+        "promptTokenCount": 1151,
+        "candidatesTokenCount": 151,
+        "totalTokenCount": 1302,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 1151
+          }
+        ],
+        "candidatesTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 151
+          }
+        ],
+        "serviceTier": "standard"
+      }
+    },
+    {
+      "n": 10,
+      "pregunta": "¿Qué me recomiendas aprender después?",
+      "texto": "Te recomiendo seguir por uno de estos tres caminos, según lo que más necesites ahora:\n\n1. **AbortController en `fetch`:** Para cancelar peticiones HTTP anteriores si el usuario vuelve a escribir antes de que responda la API (el complemento perfecto para `useDebounce`).\n2. **TanStack Query (React Query):** Para manejar caché, estados de carga, reintentos y cancelación automática de peticiones sin e",
+      "primerTrozoS": 10.08,
+      "totalS": 11.15,
+      "entrada": 1053,
+      "salida": 135,
+      "razonamiento": 0,
+      "uso": {
+        "promptTokenCount": 1053,
+        "candidatesTokenCount": 135,
+        "totalTokenCount": 1188,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 1053
+          }
+        ],
+        "candidatesTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 135
+          }
+        ],
+        "serviceTier": "standard"
+      }
+    }
+  ],
+  "razonamiento": {
+    "pregunta": "Tengo un endpoint de Next.js que tarda 3 segundos. ¿Cómo lo hago más rápido? Dame las 3 ideas más importantes.",
+    "bajo": {
+      "texto": "Aquí tienes las 3 ideas con mayor impacto para reducir esos 3 segundos:\n\n1. **Paralelismo (`Promise.all`) y Base de Datos:** Si haces varios `await` seguidos que no dependen entre sí, ejecútalos en paralelo con `Promise.all()`. Además, revisa tus consultas: añade índices en la BD, evita el problema *N+1* y pide solo los campos que necesitas.\n2. **Implementa Caché:** No recalcules ni consultes lo mismo en cada petición. Usa cabeceras `Cache-Control` en la respuesta, `unstable_cache` de Next.js, o un servicio como Redis para guardar resultados frecuentes.\n3. **Mueve trabajo pesado a segundo plano:** Si el endpoint envía emails, genera PDFs o registra analíticas, no hagas esperar al usuario. Delega esas tareas a una cola (Inngest, BullMQ) o usa la función `after()` (si usas Next.js 15) para ejecutarlas después de devolver la respuesta.",
+      "primerTrozoS": 23.17,
+      "totalS": 24.55,
+      "entrada": 79,
+      "salida": 220,
+      "razonamiento": 430,
+      "uso": {
+        "promptTokenCount": 79,
+        "candidatesTokenCount": 220,
+        "totalTokenCount": 729,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 79
+          }
+        ],
+        "candidatesTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 220
+          }
+        ],
+        "thoughtsTokenCount": 430,
+        "serviceTier": "standard"
+      }
+    },
+    "alto": {
+      "texto": "Aquí tienes las 3 ideas más importantes para bajar ese tiempo:\n\n1. **Paraleliza y optimiza la base de datos:** Si haces varios `await` seguidos que no dependen entre sí, únelos con `Promise.all()`. Además, revisa tus consultas (añade índices, usa `select` para traer solo los campos necesarios y evita el problema N+1).\n2. **Usa caché:** Evita repetir trabajo costoso. Guarda respuestas en Redis, usa `unstable_cache` (o la nueva directiva `'use cache'`) de Next.js, o añade cabeceras `Cache-Control` si los datos no cambian en cada milisegundo.\n3. **Saca las tareas pesadas del endpoint:** No hagas esperar al usuario por procesos secundarios (enviar emails, generar PDFs, guardar logs). Muévelos a colas en segundo plano (ej. Inngest, BullMQ) o usa la función `after()` de Next.js para ejecutarlos después de enviar la respuesta.",
+      "primerTrozoS": 147.41,
+      "totalS": 148.44,
+      "entrada": 79,
+      "salida": 218,
+      "razonamiento": 418,
+      "uso": {
+        "promptTokenCount": 79,
+        "candidatesTokenCount": 218,
+        "totalTokenCount": 715,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 79
+          }
+        ],
+        "candidatesTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 218
+          }
+        ],
+        "thoughtsTokenCount": 418,
+        "serviceTier": "standard"
+      }
+    }
+  },
+  "trampa": {
+    "pregunta": "Dame el código en TypeScript para llamar a la nueva API de Decisiones de Gemini con el SDK @google/genai.",
+    "texto": "No existe una **\"API de Decisiones\"** oficial en Gemini ni en el SDK `@google/genai`.\n\nSi lo que buscas es que el modelo tome una decisión estructurada (por ejemplo, elegir una opción o clasificar una acción), debes usar `ai.models.generateContent` con **Salidas Estructuradas** (`responseSchema`) o **Function Calling** (`tools`).\n\nAquí tienes un ejemplo corto usando `responseSchema` en TypeScript:\n\n```typescript\nimport { GoogleGenAI, Type } from \"@google/genai\";\n\nconst ai = new GoogleGenAI({});\n\nasync function tomarDecision() {\n  const response = await ai.models.generateContent({\n    model: \"gemini-2.5-flash\",\n    contents: \"El cliente dice: 'Quiero cancelar mi suscripción ahora mismo'. ¿Qué hacemos?\",\n    config: {\n      responseMimeType: \"application/json\",\n      responseSchema: {\n        type: Type.OBJECT,\n        properties: {\n          accion: {\n            type: Type.STRING,\n            enum: [\"RETENER\", \"CANCELAR\", \"ESCALAR_A_SOPORTE\"],\n          },\n          motivo: { type: Type.STRING },\n        },\n        required: [\"accion\", \"motivo\"],\n      },\n    },\n  });\n\n  console.log(JSON.parse(response.text));\n}\n\ntomarDecision();\n```",
+    "primerTrozoS": 102.7,
+    "totalS": 103.78,
+    "entrada": 76,
+    "salida": 309,
+    "razonamiento": 373,
+    "uso": {
+      "promptTokenCount": 76,
+      "candidatesTokenCount": 309,
+      "totalTokenCount": 758,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 76
+        }
+      ],
+      "candidatesTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 309
+        }
+      ],
+      "thoughtsTokenCount": 373,
+      "serviceTier": "standard"
+    }
+  },
+  "fecha": "2026-11-18T21:26:06.936Z",
+  "errores": [
+    {
+      "fecha": "2026-11-18T21:20:42.693Z",
+      "estado": 503,
+      "intento": 1
+    },
+    {
+      "fecha": "2026-11-18T21:21:22.527Z",
+      "estado": 429,
+      "intento": 1
+    },
+    {
+      "fecha": "2026-11-18T21:21:34.700Z",
+      "estado": 429,
+      "intento": 2
+    }
+  ]
+}
